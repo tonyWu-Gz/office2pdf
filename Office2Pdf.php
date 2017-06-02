@@ -15,12 +15,11 @@ class Office2Pdf
     
     public static function convert($doc,$path)
     {
-        $array = explode('.', $doc);
-        $ext = array_pop($array);
-        if (!self::isSupportDocType($ext) || !is_dir($path)) {
+        $path_parts = pathinfo($doc);
+        if (!self::isSupportDocType($path_parts['extension']) || !is_dir($path)) {
             return false;
         }
-        $pdf = implode('.', $array).DIRECTORY_SEPARATOR.'.pdf';
+        $pdf = $path_parts['filename'].'.pdf';
         if (self::been2Pdf($pdf,$path)) {
             return true;
         }
